@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://ba75fdk1dbsad"]
+
+[ext_resource type="Script" uid="uid://dcbcbm4lkrntl" path="res://main/main.gd" id="1_53q0u"]
+[ext_resource type="Texture2D" uid="uid://b3k4acl8lkptb" path="res://assets/pool.png" id="2_pjrb6"]
+[ext_resource type="Texture2D" uid="uid://bn3fkgf8qir10" path="res://assets/diving_board.png" id="3_xwkvk"]
+[ext_resource type="Texture2D" uid="uid://fmce7k0uobtv" path="res://assets/arrow.png" id="4_c651c"]
+[ext_resource type="Texture2D" uid="uid://r1h4nysokhmk" path="res://assets/blimbusidle.png" id="5_3wy1v"]
+[ext_resource type="Script" uid="uid://cng5khgec3ljn" path="res://arrow.gd" id="5_4dugh"]
+[ext_resource type="Texture2D" uid="uid://c82lcboqyhjq" path="res://assets/splash.png" id="6_kfbq2"]
+[ext_resource type="Texture2D" uid="uid://c50xhb8mbhokn" path="res://assets/blumbusfall.png" id="8_grrlh"]
+[ext_resource type="Texture2D" uid="uid://d8jqhfybah74" path="res://assets/blimbusdie.png" id="9_0i4oc"]
+[ext_resource type="AudioStream" uid="uid://v8mglxjevkw4" path="res://assets/universfield-water-splash-02-352021.mp3" id="10_fwcvl"]
+[ext_resource type="AudioStream" uid="uid://bg0ri1prm71tq" path="res://assets/saboteurcomics-bone-snap-408148.mp3" id="11_na0o7"]
+[ext_resource type="AudioStream" uid="uid://dxr2h40s82u3n" path="res://assets/freesound_community-springboard-a-92438.mp3" id="12_73k8k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_44saq"]
+font_size = 64
+shadow_size = 12
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_44saq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_grrlh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0i4oc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Main" type="Node" unique_id=975954956]
+script = ExtResource("1_53q0u")
+
+[node name="BG" type="CanvasLayer" parent="." unique_id=1422666283]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="BG" unique_id=1966762884]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.30006167, 0.45329982, 0.7976292, 1)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1386949728]
+visible = false
+
+[node name="EndLabel" type="Label" parent="UI" unique_id=615956232]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.2
+anchor_right = 0.5
+anchor_bottom = 0.2
+offset_left = -135.5
+offset_top = -44.0
+offset_right = 135.5
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "You Win!"
+label_settings = SubResource("LabelSettings_44saq")
+
+[node name="Button" type="Button" parent="UI" unique_id=1522052348]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -15.5
+offset_right = 44.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play Again"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2070884028]
+position = Vector2(576, 324)
+
+[node name="Pool" type="Sprite2D" parent="." unique_id=349649632]
+position = Vector2(552, 502)
+texture = ExtResource("2_pjrb6")
+
+[node name="DivingBoard" type="Sprite2D" parent="." unique_id=1009903429]
+position = Vector2(976, -92)
+texture = ExtResource("3_xwkvk")
+
+[node name="Blimbusidle" type="Sprite2D" parent="." unique_id=324580260]
+position = Vector2(930, -590)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_3wy1v")
+
+[node name="ArrrowStart" type="Marker2D" parent="." unique_id=2018424699]
+position = Vector2(108, 331)
+gizmo_extents = 49.0
+
+[node name="ArrowEnd" type="Marker2D" parent="." unique_id=1646955516]
+position = Vector2(1002, 334)
+gizmo_extents = 49.0
+
+[node name="Arrow" type="Sprite2D" parent="." unique_id=762356719 node_paths=PackedStringArray("start_point", "end_point")]
+position = Vector2(109, 331)
+texture = ExtResource("4_c651c")
+script = ExtResource("5_4dugh")
+start_point = NodePath("../ArrrowStart")
+end_point = NodePath("../ArrowEnd")
+
+[node name="Splash" type="Sprite2D" parent="." unique_id=245968897]
+visible = false
+position = Vector2(540, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_kfbq2")
+
+[node name="Blumbus" type="AnimatedSprite2D" parent="." unique_id=719698082]
+visible = false
+position = Vector2(523, -464)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_44saq")
+
+[node name="SplashSound" type="AudioStreamPlayer" parent="." unique_id=1448373890]
+stream = ExtResource("10_fwcvl")
+volume_db = -6.0
+
+[node name="DieSound" type="AudioStreamPlayer" parent="." unique_id=810096802]
+stream = ExtResource("11_na0o7")
+volume_db = -2.0
+pitch_scale = 1.6
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="." unique_id=1555150475]
+stream = ExtResource("12_73k8k")
+pitch_scale = 1.4
+
+[connection signal="jumping" from="." to="." method="_on_jumping"]
+[connection signal="jumping" from="." to="Arrow" method="_on_main_jumping"]
+[connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
